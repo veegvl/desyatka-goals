@@ -93,6 +93,7 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
           <label for="name"><span class="req">Имя</span><input id="name" type="text"></label>
           <label for="city"><span class="req">Город</span><input id="city" type="text"></label>
         </div>
+        <label for="rep" style="max-width:220px"><span class="req">Номер отчёта</span><input id="rep" type="number" min="1" inputmode="numeric"><small>Для хэштега #отчет_N, чтобы искать по чату</small></label>
         <label for="doing"><span>Чем занимаешься сейчас</span><textarea id="doing" rows="2"></textarea></label>
       </fieldset>
 
@@ -161,8 +162,8 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
 
 <script>
 (function(){
-  var ids=['name','city','doing','g1','g1t','g1m','g2','g2t','g2m','g3','g3t','g3m','pre','ask','stop','give'];
-  var example={name:'Анна',city:'Алматы',doing:'Веду SMM для двух кофеен и запускаю свой курс по рилсам.',
+  var ids=['name','city','rep','doing','g1','g1t','g1m','g2','g2t','g2m','g3','g3t','g3m','pre','ask','stop','give'];
+  var example={name:'Анна',city:'Алматы',rep:'1',doing:'Веду SMM для двух кофеен и запускаю свой курс по рилсам.',
     g1:'Подписать трёх постоянных клиентов на ведение соцсетей',g1t:'до конца спринта',g1m:'три подписанных договора, от 15 000 ₽ в месяц каждый',
     g2:'Выйти на 5 000 подписчиков в личном блоге',g2t:'до нового года',g2m:'счётчик подписчиков в профиле',
     g3:'',g3t:'до конца спринта',g3m:'',
@@ -176,9 +177,11 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
   function v(i){return $(i).value.trim()}
   function build(){
     var L=[];
-    var who=[v('name'),v('city')].filter(Boolean).join(', ');
+    var nm=v('name').replace(/[^\p{L}\p{N}]+/gu,'_').replace(/^_+|_+$/g,'');
+    var head=(nm?'#'+nm:'#Имя')+' #отчет_'+(v('rep')||'1');
+    if(v('city'))head+=' · '+v('city');
+    L.push(head);
     L.push('🎯 ЦЕЛИ НА СПРИНТ (3 месяца)');
-    L.push('👤 '+(who||'Имя, город'));
     if(v('doing'))L.push('Чем занимаюсь: '+v('doing'));
     L.push('');
     var marks=['1️⃣','2️⃣','3️⃣'],any=false;
@@ -206,7 +209,7 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
     count.className='count'+(t.length>4096?' over':'');
   }
   function save(){try{var o={};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
-  function fill(o){ids.forEach(function(i){$(i).value=(o&&o[i]!=null)?o[i]:(i.slice(-1)==='t'&&i.length===3?'до конца спринта':'')});render()}
+  function fill(o){ids.forEach(function(i){$(i).value=(o&&o[i]!=null)?o[i]:(i==='rep'?'1':(i.slice(-1)==='t'&&i.length===3?'до конца спринта':''))});render()}
   ids.forEach(function(i){$(i).addEventListener('input',function(){render();save()});$(i).addEventListener('change',function(){render();save()})});
   $('clear').addEventListener('click',function(){fill({});save();$('name').focus()});
   $('example').addEventListener('click',function(){fill(example);save()});
