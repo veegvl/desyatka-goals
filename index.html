@@ -79,9 +79,9 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
       <span>дальше раз в две недели</span>
     </div>
     <div class="notice">
-      <span>Сейчас в форме пример. Нажми «Очистить» и впиши своё.</span>
-      <button type="button" class="link" id="clear">Очистить</button>
-      <button type="button" class="link" id="example">Вернуть пример</button>
+      <span>Нужен образец? Посмотри пример заполнения.</span>
+      <button type="button" class="link" id="example">Показать пример</button>
+      <button type="button" class="link" id="clear">Очистить форму</button>
     </div>
   </header>
 
@@ -221,7 +221,7 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
     }else fallback();
   });
   var saved=null;try{saved=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
-  fill(saved||example);
+  fill(saved||{});
 })();
 </script>
 </body>
