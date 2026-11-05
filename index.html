@@ -53,6 +53,12 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-vis
 .goal:first-of-type{border-top:0;padding-top:0}
 .goal h3{margin:0;font-size:14px;font-weight:600;display:flex;gap:8px;align-items:center}
 .goal h3 em{font-style:normal;font-family:var(--font-mono);font-size:11px;color:var(--muted);font-weight:400}
+.steps{display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--bg);border-radius:8px}
+.steps-title{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.steps-title small{text-transform:none;letter-spacing:0;font-size:12px;margin-left:6px}
+.step{flex-direction:row;align-items:center;gap:10px}
+.step .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--font-mono);font-size:12px;display:grid;place-items:center}
+.step input{background:var(--surface)}
 .side{position:sticky;top:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
 @media (max-width:860px){.side{position:static}}
 .side h2{margin:0;font-size:14px;font-family:var(--font-mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -108,6 +114,12 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
               <select id="g1t"><option>до конца спринта</option><option>до нового года</option><option>в ближайший месяц</option><option>в перспективе полугода</option></select></label>
             <label for="g1m"><span>Как пойму, что получилось</span><input id="g1m" type="text"></label>
           </div>
+        <div class="steps">
+          <div class="steps-title">Три шага к цели <small>по одному предложению</small></div>
+          <label for="g1s1" class="step"><span class="n">1</span><input id="g1s1" type="text" placeholder="Что сделаю первым"></label>
+          <label for="g1s2" class="step"><span class="n">2</span><input id="g1s2" type="text" placeholder="Что сделаю вторым"></label>
+          <label for="g1s3" class="step"><span class="n">3</span><input id="g1s3" type="text" placeholder="Что сделаю третьим"></label>
+        </div>
         </div>
         <div class="goal">
           <h3>Цель 2 <em>по желанию</em></h3>
@@ -117,6 +129,12 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
               <select id="g2t"><option>до конца спринта</option><option>до нового года</option><option>в ближайший месяц</option><option>в перспективе полугода</option></select></label>
             <label for="g2m"><span>Как пойму, что получилось</span><input id="g2m" type="text"></label>
           </div>
+        <div class="steps">
+          <div class="steps-title">Три шага к цели <small>по одному предложению</small></div>
+          <label for="g2s1" class="step"><span class="n">1</span><input id="g2s1" type="text" placeholder="Что сделаю первым"></label>
+          <label for="g2s2" class="step"><span class="n">2</span><input id="g2s2" type="text" placeholder="Что сделаю вторым"></label>
+          <label for="g2s3" class="step"><span class="n">3</span><input id="g2s3" type="text" placeholder="Что сделаю третьим"></label>
+        </div>
         </div>
         <div class="goal">
           <h3>Цель 3 <em>по желанию</em></h3>
@@ -126,6 +144,12 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
               <select id="g3t"><option>до конца спринта</option><option>до нового года</option><option>в ближайший месяц</option><option>в перспективе полугода</option></select></label>
             <label for="g3m"><span>Как пойму, что получилось</span><input id="g3m" type="text"></label>
           </div>
+        <div class="steps">
+          <div class="steps-title">Три шага к цели <small>по одному предложению</small></div>
+          <label for="g3s1" class="step"><span class="n">1</span><input id="g3s1" type="text" placeholder="Что сделаю первым"></label>
+          <label for="g3s2" class="step"><span class="n">2</span><input id="g3s2" type="text" placeholder="Что сделаю вторым"></label>
+          <label for="g3s3" class="step"><span class="n">3</span><input id="g3s3" type="text" placeholder="Что сделаю третьим"></label>
+        </div>
         </div>
       </fieldset>
 
@@ -162,10 +186,10 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
 
 <script>
 (function(){
-  var ids=['name','city','rep','doing','g1','g1t','g1m','g2','g2t','g2m','g3','g3t','g3m','pre','ask','stop','give'];
+  var ids=['name','city','rep','doing','g1','g1t','g1m','g1s1','g1s2','g1s3','g2','g2t','g2m','g2s1','g2s2','g2s3','g3','g3t','g3m','g3s1','g3s2','g3s3','pre','ask','stop','give'];
   var example={name:'Анна',city:'Алматы',rep:'1',doing:'Веду SMM для двух кофеен и запускаю свой курс по рилсам.',
-    g1:'Подписать трёх постоянных клиентов на ведение соцсетей',g1t:'до конца спринта',g1m:'три подписанных договора, от 15 000 ₽ в месяц каждый',
-    g2:'Выйти на 5 000 подписчиков в личном блоге',g2t:'до нового года',g2m:'счётчик подписчиков в профиле',
+    g1:'Подписать трёх постоянных клиентов на ведение соцсетей',g1t:'до конца спринта',g1m:'три подписанных договора, от 15 000 ₽ в месяц каждый',g1s1:'Написать пяти владельцам кофеен с готовым оффером',g1s2:'Провести три созвона и показать кейс',g1s3:'Отправить договор и согласовать старт',
+    g2:'Выйти на 5 000 подписчиков в личном блоге',g2t:'до нового года',g2m:'счётчик подписчиков в профиле',g2s1:'Выложить 12 рилсов за месяц',g2s2:'Разобрать три лучших ролика и повторить формат',g2s3:'Договориться о двух взаимных упоминаниях',
     g3:'',g3t:'до конца спринта',g3m:'',
     pre:'Опубликовать первый пост-знакомство и написать пяти потенциальным клиентам',
     ask:'Нужны отзывы на мои скрипты первого касания и один контакт владельца кофейни, который готов на разговор',
@@ -191,6 +215,7 @@ button.link{border:0;background:none;color:var(--accent);padding:4px 2px;font-we
       if(!any){L.push('📌 Цели:');any=true}
       var s=marks[n-1]+' '+g+' — '+$('g'+n+'t').value;
       if(v('g'+n+'m'))s+='\n    Результат: '+v('g'+n+'m');
+      for(var k=1;k<=3;k++){if(v('g'+n+'s'+k))s+='\n    ▫️ Шаг '+k+': '+v('g'+n+'s'+k)}
       L.push(s);
     }
     if(!any)L.push('📌 Цели: (впиши цель 1)');
